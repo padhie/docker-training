@@ -13,3 +13,8 @@
 - Laufen beide Container?  
 - Sind beide Container im gleichen Netzwerk?  
 - Passt die IP / Portfreigabe?  
+  
+## wie heißt mein Image
+- mit `docker ps` kann man alle images einsehen  
+- nach dem `docker build` steht der hash am Ende vom Output  
+`writing image sha256 c3048814e....`  
