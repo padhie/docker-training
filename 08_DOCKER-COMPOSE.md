@@ -29,20 +29,23 @@ reference: *student
 ```
 
 ## compose.yaml
-`version` -> [optional|default 3] version von YAML (3 ist aktuell, 2 ist veraltet)   
-`services` -> [required] ein Service entspricht einen Container   
-`image` -> Basisimage   
-`build` -> Dockerfile    
-`volumes` -> persistenter Speicher - entspricht `--volumes`   
-`ports` -> Portdefinition (Host:Container) - entspricht `--port Host:Container`   
-`environment` -> ENV-Variable - entspricht `-e`   
-`command` -> command nach dem start ausgeführt wird   
-`restart` -> angabe ob/wann der Container neu gestartet werden kann (no, always, on-fail, unless-stopped) - entspricht `--restart=`   
-`expose` -> Portfreischaltung   
-`depends_on` -> aktueller Service benötigt einen anderen Service   
-`container_name` -> Container-name   
-`links` -> Serive mit einem anderen Service verlinken   
-`secrets` -> Sensible/Vertrauliche Daten   
+* `version` -> [optional|default 3] version von YAML (3 ist aktuell, 2 ist veraltet)   
+* `services` -> [required] ein Service entspricht einen Container   
+  * `image` -> Basisimage   
+  * `build` -> Dockerfile    
+  * `volumes` -> persistenter Speicher - entspricht `--volumes`   
+  * `ports` -> Portdefinition (Host:Container) - entspricht `--port Host:Container`   
+  * `environment` -> ENV-Variable - entspricht `-e`   
+  * `command` -> command nach dem start ausgeführt wird   
+  * `restart` -> angabe ob/wann der Container neu gestartet werden kann (no, always, on-fail, unless-stopped) - entspricht `--restart=`   
+  * `expose` -> Portfreischaltung   
+  * `depends_on` -> aktueller Service benötigt einen anderen Service (prüft nicht ob andere Service korrekt laufen)   
+  * `container_name` -> Container-name   
+  * `scale` -> [deprecated|use deploy.replicas] angabe wie oft ein Container gestartet werden soll   
+  * `deploy` -> verschiedene Einstellungen für den fertigen/laufenden Service (z.B. Service mehrfach laufen lassen)   
+  * `links` -> Serive mit einem anderen Service verlinken   
+  * `secrets` -> Sensible/Vertrauliche Daten
+* `volumes` -> Volumes können genauer definiert werden (z.B. name oder driver)
 
 ## Command
 compose.yaml muss im aktuellen Verzeichnis liegen   
@@ -56,3 +59,10 @@ compose.yaml muss im aktuellen Verzeichnis liegen
 `docker compose exec [Service] [Programm]` -> führt das angegeben Programm im angegebenen Service aus -> equivalent zu `docker exec -it [Container] [Programm]`   
 
 `docker compose` cached die `compose.yaml` Datei - muss mit `--build` angefordert werden     
+
+## Environments von extern
+in Container: `${ENVORINMENT_NAME}`   
+auf der CLI übergeben: `ENVORINMENT_NAME=value docker compose up`   
+alternativ die OS varianten verwenden (z.B. `export ENVORINMENT_NAME=value` -> `docker compose up`)   
+   
+docker unterstützt auch `.env`-Dateien   
