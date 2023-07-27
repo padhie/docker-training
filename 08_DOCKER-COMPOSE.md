@@ -41,6 +41,7 @@ reference: *student
   * `expose` -> Portfreischaltung   
   * `depends_on` -> aktueller Service benötigt einen anderen Service (prüft nicht ob andere Service korrekt laufen)   
   * `container_name` -> Container-name   
+  * `profiles` -> kapsel services in Profile - werden nur gestartet, wenn man das `--profile PROFILE` direkt starte (depends_on wird ignoriert)   
   * `scale` -> [deprecated|use deploy.replicas] angabe wie oft ein Container gestartet werden soll   
   * `deploy` -> verschiedene Einstellungen für den fertigen/laufenden Service (z.B. Service mehrfach laufen lassen)   
   * `links` -> Serive mit einem anderen Service verlinken   
@@ -66,3 +67,6 @@ auf der CLI übergeben: `ENVORINMENT_NAME=value docker compose up`
 alternativ die OS varianten verwenden (z.B. `export ENVORINMENT_NAME=value` -> `docker compose up`)   
    
 docker unterstützt auch `.env`-Dateien   
+
+### Profiles
+mit `COMPOSE_PROFILES=` kann man die Profile hinterlegen, ohne diese ständig mit angeben zu müssen
