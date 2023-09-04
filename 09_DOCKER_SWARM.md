@@ -46,4 +46,25 @@ Mehrere Nodes können (bisher) nur aktiv mit Linux verwenden werden (OS-Bedingte
 `docker service ls`: listet alle Swarm-Service auf
 `docker service update`: aktualisiert die Swarm-Service Konfiguration
 `docker service remove`: Swarm-Service entfernen
-`docker service ps {SERVICENAME}`: listet alle Swarm-Task auf eines bestimmten Swarm-Service
+`docker service ps {SERVICENAME}`: listet alle Swarm-Task auf eines bestimmten Swarm-Service   
+
+## Secrets in Swarm
+`docker sectet ls`: Liste alle Secret   
+`printf "foobar" | docker secret create abc -`: speichert `foobar` in das Secret mit den namen `abc`   
+`docker service create --secret abc nginx`: startet ein Service `nginx` mit dem Secret `abc`   
+secrets werden unter `/run/secrets` im container abgelegt   
+`docker service create --secret source=abc,target=/tmp/def {SERVICE}`: Secret-Datei `abc` wird unter `/tmp/def` abgelegt   
+
+## Swarm Configs
+`docker config ls`: Liste aller Configs      
+`docker config create my-config config-file.txt`: erstellt eine Config `my-config` mit `config-file.txt` als inhalt/verweis   
+`docker service create --config my-config nginx`: erstellt ein Service `nginx` mit der config `my-config`    
+configs werden im root-Verzeichnis abgelegt   
+`docker service create --config source=my-config,target=/etc/my-config {SERVICE}`: config `my-config` wird unter `/etc/my-config` abgelegt   
+
+## Swarm mit docker-compose.yml 
+`docker stack ls`: Liste aller Stacks
+`docker stack deploy -c compose.yml service_1_2`: erstellt einen "Stack" anhand des `compose.yml` file mit dem namen `service_1_2`   
+hier muss `version` in der compose.yml angegeben werden, da sonst von 1.0 ausgegangen wird   
+`docker stack services service_1_2`: listet alle replicas in einem Stack auf   
+`docker stack remove service_1_2`: löscht den kompletten Stack `service_1_2` (mit allen Containern und Netzwerken)   
